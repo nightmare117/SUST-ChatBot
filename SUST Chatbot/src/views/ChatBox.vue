@@ -1,13 +1,77 @@
 <script setup>
-    import { onMounted, ref } from 'vue'
+    import { onMounted, ref, watch } from 'vue'
     import WatermelonJSON1 from '../assets/lottie/chatBoxAnim.json'
     import msgBox from '../components/MsgBox.vue'
 
-    let anim = ref();
+    
+    const box2ref = ref(null)
+    const id1 = ref(0)
+    const listItem = ref([{message:'How can I help you!',num: '0'}])
 
+    // listItem.value.push({
+    //     message : 'Send me sust website link',
+    //     num : '1',
+    // })
+
+    // let x = [0,1,2,3]
+    console.log(listItem.value[0])
+
+    // setInterval(()=>{
+    //     var targetDiv = document.querySelector('.box2')
+    //     try{
+    //         targetDiv.scrollTop = targetDiv.scrollHeight
+    //     }catch(e){
+    //         console.log(e)
+    //     }
+    // },1000)
+
+    let anim = ref();
+    const msgData = ref()
+    const SendMsg = () => {
+        console.log(msgData.value)
+        console.log("wow")
+        if( msgData.value !== ''){
+            let text = msgData.value
+            // console.log(typeof(text))
+            listItem.value.push({
+                message: text ,
+                num: '1',
+            })
+            msgData.value = ''
+            listItem.value.push({
+                message: "Your query is received!",
+                num: '0',
+            })
+            id1.value = id1.value + 1
+            
+        }
+    }
+
+    const box2Scroll = (e) => {
+        console.log('ohhhhhh')
+        var targetDiv = document.querySelector('.box2')
+        try{
+            targetDiv.scrollTop = targetDiv.scrollHeight
+        }catch(e){
+            console.log(e)
+        } 
+    }
+
+    watch(id1, () =>{
+        console.log('opps')
+        setTimeout(()=>{
+        var targetDiv = document.querySelector('.box2')
+        try{
+            targetDiv.scrollTop = targetDiv.scrollHeight
+        }catch(e){
+            console.log(e)
+        }
+    },1000)
+    })
     onMounted(() => {
     // the DOM element will be assigned to the ref after initial render
     anim.value.play()
+    id1.value = 0
     })
 </script>
 
@@ -31,12 +95,17 @@
 
                 </div>
                 <div class="box2">
-                    <msgBox/>
+                    <!-- <li :v-for="item in list">{{item.msg}}</li> -->
+                    <!-- <msgBox :msg="list[0].message"/> -->
+                    <!-- <msgBox :v-for= "item in listItem"/> -->
+                    <div class="msgSlot" v-for="item in listItem">
+                        <msgBox :msg="item.message" :flag="item.num" @response="box2Scroll(e)"/>
+                    </div>
                 </div>
                 <div class="box3">
                     <div class="box3container">
-                        <input class="box3input" type="text" placeholder="Type Something to send..."  />
-                        <img src="../assets/message.png" alt="send_msg"/>
+                        <input class="box3input" type="text" placeholder="Type Something to send..." v-model="msgData" @keyup.enter="SendMsg" />
+                        <img src="../assets/message.png" @click="SendMsg" alt="send_msg"/>
                     </div>
                     
                     
@@ -48,6 +117,11 @@
 </template>
 
 <style>
+.msgSlot{
+    max-width: 70%;
+    padding: 10px;
+        margin-right: 8px;
+}
 .box3container{
     display: flex;
     justify-content: center;
@@ -67,8 +141,15 @@
    
 } */
 
+.box2::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
 .box2{
-    overflow-y: auto !important;
+    /* overflow-y: auto !important; */
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
     /* max-height: 250px; */
     width: 100%;
     margin-top: 4%;
