@@ -2,6 +2,10 @@
 import { onMounted, ref } from 'vue'
 import WatermelonJSON from '../assets/lottie/navHeader.json'
 
+const sustPageRedirect = () => {
+    window.location.href = "https://www.sust.edu/"
+}
+
 let anim = ref();
 
 onMounted(() => {
@@ -28,15 +32,20 @@ onMounted(() => {
                 <span style="color:rgba(0,0,0,.8);margin-left: 20px;">CHATBOT</span>
             </h4>
         </div>
-        <div class="navLogo">
-            <img style="width:70px;height:70px" src="../assets/sustLogo.png" alt="sustLogo"/>
+        <div class="navLogo" @click="sustPageRedirect">
+            <img src="../assets/sustLogo.png" alt="sustLogo"/>
         </div>
     </div>
 </template>
 
 <style>
+.navLogo img:hover{
+    height: 73px;
+    width: 73px;
+}
 .navLogo img{
-    
+    height: 70px;
+    width: 70px;
 }
 .navLogo{
     padding-right:30px ;
@@ -45,6 +54,7 @@ onMounted(() => {
     display: flex;
     width: calc(100% - 50% - 120px);
     height: 100%;
+    cursor:pointer;
 }
 .navTitle h4{
     min-width: 400px;
@@ -52,7 +62,7 @@ onMounted(() => {
     /* font-family: Arial, Helvetica, sans-serif; */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 28px;
-    letter-spacing: 12px;
+    letter-spacing: 8px;
     /* font-weight: bold; */
 }
 .navTitle{

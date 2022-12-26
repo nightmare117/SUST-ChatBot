@@ -26,18 +26,19 @@
     // },1000)
 
     let anim = ref();
-    const msgData = ref()
+    const msgData = ref(null)
     const SendMsg = () => {
         console.log(msgData.value)
         console.log("wow")
-        if( msgData.value !== ''){
+        if( msgData.value != null){
+            //console.log('not null value')
             let text = msgData.value
             // console.log(typeof(text))
             listItem.value.push({
                 message: text ,
                 num: '1',
             })
-            msgData.value = ''
+            msgData.value = null
             listItem.value.push({
                 message: "Your query is received!",
                 num: '0',
@@ -52,6 +53,7 @@
         var targetDiv = document.querySelector('.box2')
         try{
             targetDiv.scrollTop = targetDiv.scrollHeight
+            msgData.value = null
         }catch(e){
             console.log(e)
         } 
@@ -63,10 +65,11 @@
         var targetDiv = document.querySelector('.box2')
         try{
             targetDiv.scrollTop = targetDiv.scrollHeight
+            msgData.value=null
         }catch(e){
             console.log(e)
         }
-    },1000)
+    },100)
     })
     onMounted(() => {
     // the DOM element will be assigned to the ref after initial render
@@ -168,6 +171,7 @@
     margin: 10px;
     height: 35px;
     width: 35px;
+    cursor: pointer;
 }
 .box3 img{
     margin: 10px;
