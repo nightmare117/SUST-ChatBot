@@ -1,21 +1,30 @@
 <script setup>
+    //import cleanData from '../clean-data.js'
     import { onMounted, ref, watch } from 'vue'
     import WatermelonJSON1 from '../assets/lottie/chatBoxAnim.json'
     import msgBox from '../components/MsgBox.vue'
+    import axios from 'axios';
 
     
     const box2ref = ref(null)
     const id1 = ref(0)
     const listItem = ref([{message:'How can I help you!',num: '0'}])
 
+    const dataMine = (reqData) =>{
+        axios.get('http://localhost:3100/')
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+
+   // console.log(cleanData.clean_data.asdf("who m i!!"))
     // listItem.value.push({
     //     message : 'Send me sust website link',
     //     num : '1',
     // })
-
-    // let x = [0,1,2,3]
-    console.log(listItem.value[0])
-
     // setInterval(()=>{
     //     var targetDiv = document.querySelector('.box2')
     //     try{
@@ -38,6 +47,8 @@
                 message: text ,
                 num: '1',
             })
+            //server test
+            dataMine()
             msgData.value = null
             listItem.value.push({
                 message: "Your query is received!",
@@ -123,7 +134,7 @@
 .msgSlot{
     max-width: 70%;
     padding: 10px;
-        margin-right: 8px;
+        margin-right: 3px;
 }
 .box3container{
     display: flex;
@@ -145,8 +156,15 @@
 } */
 
 .box2::-webkit-scrollbar { /* WebKit */
-    width: 0;
-    height: 0;
+    /* width: 0;
+    height: 0; */
+    width: 10px;
+    height: 10px !important;
+    border-radius: 1500px;
+}
+.box2::-webkit-scrollbar-thumb {
+  background: rgba(75, 77, 73, 0.252);
+  border-radius: 1500px;
 }
 .box2{
     /* overflow-y: auto !important; */
