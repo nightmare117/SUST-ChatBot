@@ -8,6 +8,7 @@
     import checkReg from '../reg_validation'
     import paymentCheck from '../queryFunctions/payment'
     import resultCheck from '../queryFunctions/result'
+    import centerCheck from '../queryFunctions/exam-center'
     
     const box2ref = ref(null)
     const id1 = ref(0)
@@ -34,7 +35,7 @@
                 replyAi.value= res.data.reply
                 let text2 = res.data.tag
                 console.log(text2)
-                if(text2.toLowerCase() == "payment"||text2.toLowerCase()=="result"){
+                if(text2.toLowerCase() == "payment"||text2.toLowerCase()=="result"||text2.toLowerCase()=="exam_center"){
                     regQuery.value= true
                     tagTrack.value = text2
                     listItem.value.push({
@@ -99,8 +100,11 @@
                     let text3 =""
                     if(tagTrack.value == "payment"){
                         text3 = paymentCheck.paymentService.confirmation(Number(text))
-                    }else{
+                    }else if(tagTrack.value== "result"){
                         text3 = resultCheck.resultService.checkResult(Number(text))
+                    }else{
+                        let str = centerCheck.examCenterSerVice.getExamCenter(Number(text))
+                        text3 = str + " is your exam center."
                     }
                     listItem.value.push({
                     message: text3 ,
@@ -111,12 +115,22 @@
                     regQuery.value =false
                 }else{
                     listItem.value.push({
-                    message: "No data found!" ,
+                    message: "Invalid registration number!" ,
                     num: '0',
                     })
                     id1.value = id1.value + 1
                     regQuery.value =false
                 }
+                setTimeout(()=>{
+                    listItem.value.push({
+                    message: "How can I help you!" ,
+                    num: '0',
+                    })
+                    id1.value = id1.value + 1
+                    regQuery.value =false
+
+                },2500)
+
             }else{
                 dataMine(text)
                 msgData.value = null

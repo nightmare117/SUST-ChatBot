@@ -17,6 +17,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgb(240,242,245);
+  background: rgb(240, 242, 245);
 }
 </style>
