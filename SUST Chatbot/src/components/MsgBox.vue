@@ -17,11 +17,12 @@ import WatermelonJSON2 from '../assets/lottie/loading.json'
     const userStyle = {
         background : 'white',
         color: 'black',
+        width:'auto',
         marginRight: '35px',
         borderBottomRightRadius: '0px',
         paddingRight: '10px',
         paddingLeft: '13px',
-        width: 'calc(100% - 60px)',
+       // width: 'calc(100% - 60px)',
     }
 
     const style = {
@@ -36,6 +37,8 @@ import WatermelonJSON2 from '../assets/lottie/loading.json'
 
     if(props.flag == '1'){
         styleM.value = userStyle 
+    }else{
+
     }
     emit('response', 'hello from child')
     onMounted(() => {

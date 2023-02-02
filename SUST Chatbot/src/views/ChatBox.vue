@@ -4,20 +4,65 @@
     import WatermelonJSON1 from '../assets/lottie/chatBoxAnim.json'
     import msgBox from '../components/MsgBox.vue'
     import axios from 'axios';
-
+    import cleanData from '../clean-data'
+    import checkReg from '../reg_validation'
+    import paymentCheck from '../queryFunctions/payment'
+    import resultCheck from '../queryFunctions/result'
     
     const box2ref = ref(null)
     const id1 = ref(0)
     const listItem = ref([{message:'How can I help you!',num: '0'}])
+    let replyAi = ref()
+    const regQuery = ref(false)
+    const tagTrack = ref(null)
 
-    const dataMine = (reqData) =>{
-        axios.get('http://localhost:3100/')
+    const dataMine =(reqData) =>{
+        //onsole.log(reqData)
+        axios.post('http://127.0.0.1:8000/bot/',
+            {
+                question: reqData
+            })
             .then(res => {
-                console.log(res.data)
+                //console.log(res.data)
+                // if(res.status == 400){
+                //     listItem.value.push({
+                //     message: "Sorry, I am not clear what you want to know",
+                //     num: '0',
+                // })
+                // }
+                console.log(res)
+                replyAi.value= res.data.reply
+                let text2 = res.data.tag
+                console.log(text2)
+                if(text2.toLowerCase() == "payment"||text2.toLowerCase()=="result"){
+                    regQuery.value= true
+                    tagTrack.value = text2
+                    listItem.value.push({
+                    message: "Please, give me your registration number.",
+                    num: '0',
+                    })
+                    id1.value = id1.value + 1
+                }else{
+                    let text1 = replyAi.value
+                    console.log(text1)
+                    listItem.value.push({
+                        message: text1,
+                        num: '0',
+                    })
+                    id1.value = id1.value + 1
+                }
+                id1.value = id1.value + 1
             })
             .catch(e =>{
                 console.log(e)
+                listItem.value.push({
+                    message: "Sorry, I am not clear what you want to know",
+                    num: '0',
+                })
+                id1.value = id1.value + 1
+                
             })
+
     }
 
    // console.log(cleanData.clean_data.asdf("who m i!!"))
@@ -38,7 +83,7 @@
     const msgData = ref(null)
     const SendMsg = () => {
         console.log(msgData.value)
-        console.log("wow")
+        //console.log("wow")
         if( msgData.value != null){
             //console.log('not null value')
             let text = msgData.value
@@ -48,13 +93,42 @@
                 num: '1',
             })
             //server test
-            dataMine()
-            msgData.value = null
-            listItem.value.push({
-                message: "Your query is received!",
-                num: '0',
-            })
-            id1.value = id1.value + 1
+            if(regQuery.value == true){
+                let regFlag = checkReg.v.check(text)
+                if(regFlag){
+                    let text3 =""
+                    if(tagTrack.value == "payment"){
+                        text3 = paymentCheck.paymentService.confirmation(Number(text))
+                    }else{
+                        text3 = resultCheck.resultService.checkResult(Number(text))
+                    }
+                    listItem.value.push({
+                    message: text3 ,
+                    num: '0',
+                    })
+                    text3 =""
+                    id1.value = id1.value + 1
+                    regQuery.value =false
+                }else{
+                    listItem.value.push({
+                    message: "No data found!" ,
+                    num: '0',
+                    })
+                    id1.value = id1.value + 1
+                    regQuery.value =false
+                }
+            }else{
+                dataMine(text)
+                msgData.value = null
+            }
+            
+            // let text1 = replyAi.value
+            // console.log(text1)
+            // listItem.value.push({
+            //     message: text1,
+            //     num: '0',
+            // })
+            
             
         }
     }
