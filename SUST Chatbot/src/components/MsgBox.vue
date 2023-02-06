@@ -99,12 +99,17 @@ import WatermelonJSON2 from '../assets/lottie/loading.json'
         border-radius: 1000px;
     }
     .msgText{
-        letter-spacing: 1px;
-        font-size: 12px;
+        /* letter-spacing: 1px; */
+        word-spacing: 1.2px;
+        line-height: 1.2;
+        font-size: 13px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         border-radius: 10px;
         /* font-family: Arial, Helvetica, sans-serif; */
-        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: Helvetica;
+        /* font-family: system-ui; */
+        /* font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+        /* font-family: Arial, Helvetica, sans-serif; */
         text-align: right;
         display: flex;
         padding-right: 10px;

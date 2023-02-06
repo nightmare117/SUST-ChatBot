@@ -50,7 +50,10 @@
                         message: text1,
                         num: '0',
                     })
-                    id1.value = id1.value + 1
+                    setTimeout(() =>{
+                        id1.value = id1.value + 1
+                    },1500)
+                    
                 }
                 id1.value = id1.value + 1
             })
@@ -182,7 +185,7 @@
         <div class="chatBoxContainer">
             <div class="chatBoxAnim">
                 <lottie-animation
-                style = "height: calc(100% - 150px); , width: calc(100% -150px) ;;"
+                style = "height: calc(100% - 200px); , width: calc(100% -200px) ;;"
                 :animation-data="WatermelonJSON1"
                 :auto-play="true"
                 :loop="true"
@@ -328,7 +331,7 @@
     border-radius: 10px;
     padding: 10px;
     width: 100%;
-    height: 450px;
+    height: 530px;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     background: white;
 }
@@ -336,7 +339,7 @@
     min-width: 500px;
     min-height: 450px;
     width: 60%;
-    height: calc(100% - 100px);
+    height: calc(100% - 80px);
     display: flex;
     justify-content: center;
     align-items: center;
